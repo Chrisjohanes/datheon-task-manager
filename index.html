@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple productivity tracker to organize tasks, manage deadlines, and track progress."
+    />
+    <title>TaskFlow | Productivity Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-inner">
+        <a class="brand" href="#" aria-label="TaskFlow home">
+          <span class="brand-icon">✓</span>
+          <span>TaskFlow<span class="brand-dot">.</span></span>
+        </a>
+        <span class="header-label">PERSONAL PRODUCTIVITY</span>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="welcome-section">
+        <p class="eyebrow">YOUR WORKSPACE</p>
+        <h1>Make today <span>count.</span></h1>
+        <p class="subtitle">
+          Organize your priorities, stay focused, and make progress one task at
+          a time.
+        </p>
+      </section>
+
+      <section class="stats-grid" aria-label="Task statistics">
+        <article class="stat-card">
+          <span class="stat-label">Total tasks</span>
+          <strong id="total-count">0</strong>
+          <span class="stat-note">All your tasks</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">In progress</span>
+          <strong id="active-count">0</strong>
+          <span class="stat-note">Still to be done</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Completed</span>
+          <strong id="completed-count">0</strong>
+          <span class="stat-note">Tasks finished</span>
+        </article>
+        <article class="stat-card progress-card">
+          <span class="stat-label">Overall progress</span>
+          <strong id="progress-percent">0%</strong>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Overall task completion"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            id="progress-track"
+          >
+            <span id="progress-fill"></span>
+          </div>
+        </article>
+      </section>
+
+      <section class="task-form-card" aria-labelledby="form-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PLAN YOUR DAY</p>
+            <h2 id="form-title">Create a new task</h2>
+          </div>
+          <span class="form-badge">✦ Stay organized</span>
+        </div>
+
+        <form id="task-form">
+          <div class="form-group">
+            <label for="task-title"
+              >Task name <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="task-title"
+              name="title"
+              placeholder="e.g. Finish project documentation"
+              maxlength="120"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-category">Category</label>
+              <select id="task-category" name="category">
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Study" selected>Study</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="task-due-date">Due date</label>
+              <input type="date" id="task-due-date" name="dueDate" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="cancel-edit" hidden>
+              Cancel edit
+            </button>
+            <button type="submit" class="btn btn-primary" id="submit-task">
+              <span aria-hidden="true">+</span> Add task
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="task-list-section" aria-labelledby="tasks-heading">
+        <div class="list-heading">
+          <div>
+            <p class="eyebrow">YOUR TASKS</p>
+            <h2 id="tasks-heading">Task overview</h2>
+          </div>
+          <span class="task-count" id="visible-count">0 tasks</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="filter-tabs" role="group" aria-label="Filter tasks">
+            <button
+              class="filter-btn active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            <button
+              class="filter-btn"
+              type="button"
+              data-filter="active"
+              aria-pressed="false"
+            >
+              Active
+            </button>
+            <button
+              class="filter-btn"
+              type="button"
+              data-filter="completed"
+              aria-pressed="false"
+            >
+              Completed
+            </button>
+          </div>
+
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input
+              type="search"
+              id="task-search"
+              placeholder="Search tasks..."
+              aria-label="Search tasks"
+            />
+          </label>
+        </div>
+
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon" aria-hidden="true">✦</div>
+          <h3 id="empty-title">A fresh start!</h3>
+          <p id="empty-message">
+            Add your first task above and start making progress.
+          </p>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <p>Small steps. Real progress.</p>
+        <p>TaskFlow · <span id="current-year"></span></p>
+      </footer>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
